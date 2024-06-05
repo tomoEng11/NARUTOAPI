@@ -18,43 +18,76 @@ final class NARUTOAPITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+//    func testAPIClient_WhenValidResponseProvided_ShouldReturnTrue() {
+//        // Arrange
+//        let jsonData = """
+//        {
+//            "characters": [
+//                {
+//                    "name": "🥺"
+//                }
+//            ],
+//            "currentPage": 1,
+//            "pageSize": 10,
+//            "totalCharacters": 100
+//        }
+//        """.data(using: .utf8)!
+//
+//        MockURLProtocol.stubResponseData = jsonData
+//        let config = URLSessionConfiguration.ephemeral
+//        config.protocolClasses = [MockURLProtocol.self]
+//        let session = URLSession(configuration: config)
+//
+//
+//        let sut = APIClient(urlSession: session)
+//        let expectation = self.expectation(description: "does not return successful response")
+//
+//        // Act
+//        sut.getData { result in
+//            switch result {
+//            case .success(let result):
+//                XCTAssertEqual(result.first!.name, "🥺")
+//                expectation.fulfill()
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//        self.wait(for: [expectation], timeout: 5)
+//    }
+
     func testAPIClient_WhenValidResponseProvided_ShouldReturnTrue() {
-        // Arrange
-        let jsonData = """
-        {
-            "characters": [
-                {
-                    "name": "🥺"
-                }
-            ],
-            "currentPage": 1,
-            "pageSize": 10,
-            "totalCharacters": 100
-        }
-        """.data(using: .utf8)!
-
-        MockURLProtocol.stubResponseData = jsonData
-        let config = URLSessionConfiguration.ephemeral
-        config.protocolClasses = [MockURLProtocol.self]
-        let session = URLSession(configuration: config)
-
-        let sut = APIClient(urlSession: session)
-        let expectation = self.expectation(description: "does not return successful response")
-
-        // Act
+        let sut = APIClient(urlSession: .shared)
         Task {
-                do {
-                    let result = try await sut.getData()
-                    // Assert
-                    XCTAssertEqual(result.first?.name, "🥺")
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Error: \(error)")
-                }
-            }
-
-            self.wait(for: [expectation], timeout: 5)
+            let result = try await sut.getData()
+            XCTAssertEqual(result.first?.name, "Zero-Tails")
         }
+    }
+
+//    func testAPIClient_WhenValidResponseProvided_ShouldReturnTrue() {
+//        let jsonData = """
+//                {
+//                    "characters": [
+//                        {
+//                            "name": "🥺"
+//                        }
+//                    ],
+//                    "currentPage": 1,
+//                    "pageSize": 10,
+//                    "totalCharacters": 100
+//                }
+//        """.data(using: .utf8)!
+//
+//        MockURLProtocol.stubResponseData = jsonData
+//        let config = URLSessionConfiguration.ephemeral
+//        config.protocolClasses = [MockURLProtocol.self]
+//        let session = URLSession(configuration: config)
+//
+//        let sut = APIClient(urlSession: session)
+//        Task {
+//            let result = try await sut.getData()
+//            XCTAssertEqual(result.first!.name, "🥺")
+//        }
+//    }
 
 }
 

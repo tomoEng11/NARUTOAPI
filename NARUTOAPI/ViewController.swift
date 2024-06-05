@@ -18,6 +18,9 @@ final class ViewController: UIViewController {
 //
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
+//        APIClient().getData { result in
+//            print(result)
+//        }
 //    }
 //}
 //
